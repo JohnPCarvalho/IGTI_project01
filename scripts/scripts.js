@@ -19,7 +19,7 @@ function trackRange(event) {
 
   let stringNumber = actualNumber.value.toString();
 
-  convertNumber(event.target.value);
+  writtenNumber.value = convertNumber(event.target.value);
 
   function convertNumber(number) {
     
@@ -27,9 +27,9 @@ function trackRange(event) {
 
     let stringNumber = number.toString();
     let separatedNumber = stringNumber.split('', stringNumber.length);
-    console.log(separatedNumber);
+    console.log(separatedNumber.length);
     
-    if (separatedNumber.length = 3) {
+    if (separatedNumber.length == 3) {
       //centena
 
       //se for diferente de cento e alguma coisa (100 ~ 199)
@@ -65,12 +65,6 @@ function trackRange(event) {
         console.log(convertedNumber);
       }
 
-      // unidade dentro da centena
-      if (separatedNumber[1] == 0) {
-        convertedNumber += ' e ' + units[separatedNumber[2]];
-        console.log(convertedNumber);
-      } 
-      
       //centenas puras
       if (separatedNumber[0] > 1 && separatedNumber[1] == 0 && separatedNumber[2] == 0) {
         convertedNumber = hundreds[separatedNumber[0]];
@@ -86,14 +80,35 @@ function trackRange(event) {
     } 
     if (separatedNumber.length == 2) {
       //dezena
-      convertedNumber = dozens[separatedNumber[1]];
-      convertedNumber += ' e ';
-      
-    } else {
-      //unidade
+      //se não estiver nas casas de 10-19 e não for múltiplo de 10 (10, 20, 30, 40...)
+      if (separatedNumber[0] != 1 && separatedNumber[1] != 0) {
+        convertedNumber += dozens[separatedNumber[0] - 1] + ' e ' + units[separatedNumber[1]];
+        console.log(convertedNumber);
+      } 
+      else if (separatedNumber[0] == 1 && separatedNumber[1] > 0) {
+        //aqui entra o specialDozens
+        convertedNumber = specialDozens[separatedNumber[1] - 1];
+        console.log(convertedNumber);
+      }
+      else if (separatedNumber[0] != 1 && separatedNumber[1] == 0) {
+        //dezena pura
+        convertedNumber = dozens[separatedNumber[0] - 1];
+        console.log(convertedNumber);
+      }
+      else {
+        convertedNumber = dozens[0];
+        console.log(convertedNumber);
+      }
+    }
+    else {
+      //unidade simples
+      convertedNumber = units[separatedNumber[0]];
+      console.log(convertedNumber);
     }
     return convertedNumber;
   }
+
+  
 }
 
 function start() {
