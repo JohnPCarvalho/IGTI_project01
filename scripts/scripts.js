@@ -11,7 +11,7 @@ let writtenNumber = document.querySelector("#writtenNumber");
 console.log(hundreds);
 
 rangeControl.addEventListener('input', trackRange);
-rangeControl.addEventListener('input', convertNumber);
+
 
 function trackRange(event) {
   
@@ -75,6 +75,7 @@ function trackRange(event) {
       if (separatedNumber[0] == 1 && separatedNumber[1] == 0 && separatedNumber[2] == 0) {
         convertedNumber = hundreds[0];
         console.log(convertedNumber);
+        console.log('isso aqui');
       }
 
     } 
@@ -100,15 +101,13 @@ function trackRange(event) {
         console.log(convertedNumber);
       }
     }
-    else {
+    if (separatedNumber.length == 1) {
       //unidade simples
       convertedNumber = units[separatedNumber[0]];
       console.log(convertedNumber);
     }
     return convertedNumber;
   }
-
-  
 }
 
 function start() {
