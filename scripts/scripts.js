@@ -14,52 +14,89 @@ rangeControl.addEventListener('input', trackRange);
 rangeControl.addEventListener('input', convertNumber);
 
 function trackRange(event) {
-  //every time that the value changes, it needs to update the other
-  //two inputs, so, I need to 'bind' them.
-  //The first binding. The second is gonna be a little more challenging
+  
   actualNumber.value = event.target.value;
 
   let stringNumber = actualNumber.value.toString();
-  //console.log(stringNumber);  
-  //let stringSeparated = stringNumber.split('', stringNumber.length);
-  //console.log(stringSeparated);
 
-  function convertNumber(event) {
-    let number = event.target.value;
-    let convertedNumber;
+  convertNumber(event.target.value);
+
+  function convertNumber(number) {
     
+    let convertedNumber = '';
+
     let stringNumber = number.toString();
     let separatedNumber = stringNumber.split('', stringNumber.length);
-    console.log('passando aqui');
-    if (separatedNumber.length > 2) {
+    console.log(separatedNumber);
+    
+    if (separatedNumber.length = 3) {
       //centena
-      // for (let i = 0; i < separatedNumber.length; i++) {
-      //   convertedNumber = hundreds[separatedNumber[i - 1]] + ' e'  
-      // }
-      convertedNumber = hundreds[separatedNumber[i - 1]]
-      console.log(convertedNumber);
-    } else if (separatedNumber.length > 1) {
+
+      //se for diferente de cento e alguma coisa (100 ~ 199)
+      if (separatedNumber[0] != 1 ) {
+        convertedNumber += hundreds[separatedNumber[0]];
+        console.log(convertedNumber);
+      }
+      //se cair dentro do cento e alguma coisa
+      if (separatedNumber[0] == 1 ) {
+        convertedNumber += hundreds[1];
+        console.log(convertedNumber);
+      }
+      //dezena dentro da centena
+      //dezena que nao for 0 ou da familia do 10 (10 ~ 19)
+      if (separatedNumber[1] != 0 && separatedNumber[1] != 1) {
+        convertedNumber += ' e ' + dozens[separatedNumber[1] - 1];
+        console.log(convertedNumber);
+      } 
+      //dezena que estiver entre 11 e 19 (specialDozens)
+      else if (separatedNumber[1] == 1 && separatedNumber[2] != 0){
+        convertedNumber += ' e ' +  specialDozens[separatedNumber[2] - 1];
+        console.log(convertedNumber);
+      } 
+      else if (separatedNumber[1] == 1 && separatedNumber[2] == 0) {
+        console.log('passou');
+        convertedNumber += ' e ' + dozens[0];
+        console.log(convertedNumber);
+      } 
+
+      //dezena com unidade
+      if(separatedNumber[1] != 1 && separatedNumber[2] != 0) {
+        convertedNumber+= ' e ' + units[separatedNumber[2]];
+        console.log(convertedNumber);
+      }
+
+      // unidade dentro da centena
+      if (separatedNumber[1] == 0) {
+        convertedNumber += ' e ' + units[separatedNumber[2]];
+        console.log(convertedNumber);
+      } 
+      
+      //centenas puras
+      if (separatedNumber[0] > 1 && separatedNumber[1] == 0 && separatedNumber[2] == 0) {
+        convertedNumber = hundreds[separatedNumber[0]];
+        console.log(convertedNumber);
+      }
+
+      //cem
+      if (separatedNumber[0] == 1 && separatedNumber[1] == 0 && separatedNumber[2] == 0) {
+        convertedNumber = hundreds[0];
+        console.log(convertedNumber);
+      }
+
+    } 
+    if (separatedNumber.length == 2) {
       //dezena
+      convertedNumber = dozens[separatedNumber[1]];
+      convertedNumber += ' e ';
+      
     } else {
       //unidade
     }
     return convertedNumber;
   }
-
-  convertNumber(event.target.value);
 }
-
-// function convertNumber(event) {
-//   let number = event.target.value;
-  
-//   let stringNumber = number.toString();
-//   let separatedNumber = stringNumber.split('', stringNumber.length);
-//   console.log(separatedNumber);
-// }
-
-
 
 function start() {
   console.log('Começou');
-}
+  }
 
